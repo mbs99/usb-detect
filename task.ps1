@@ -23,13 +23,15 @@ do {
             
             $Result = [System.Windows.Forms.MessageBox]::Show("Backup starten?", "Backup", 1)
  
-            If ($Result -eq "Yes") {
+            If ($Result -eq "OK") {
                 write-host (get-date -format s) " Starting task in 3 seconds..."
                 start-sleep -seconds 3
                 $cwd = $driveLetter + "\backup"
-                start-process -FilePath rsyncStart.bat -WorkingDirectory $cwd
+                write-host (get-date -format s) "" $cwd
+                start-process -FilePath "$cwd\\rsyncStart.bat" -WorkingDirectory $cwd
             }
             else {
+                write-host (get-date -format s) "Canceled..."
                 # noop
             }
         }
