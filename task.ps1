@@ -29,3 +29,4 @@ start-process "Z:\sync.bat"
 Remove-Event -SourceIdentifier volumeChange
 } while (1-eq1) #Loop until next event
 Unregister-Event -SourceIdentifier volumeChange
+
