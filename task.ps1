@@ -1,4 +1,6 @@
 #Requires -version 2.0
+[System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+
 Register-WmiEvent -Class win32_VolumeChangeEvent -SourceIdentifier volumeChange
 write-host (get-date -format s) " Beginning script..."
 do {
@@ -24,8 +26,8 @@ do {
             If ($Result -eq "Yes") {
                 write-host (get-date -format s) " Starting task in 3 seconds..."
                 start-sleep -seconds 3
-                $cmd = $driveLetter + "\backup\backup.cmd"
-                start-process $cmd
+                $cwd = $driveLetter + "\backup"
+                start-process -FilePath rsyncStart.bat -WorkingDirectory $cwd
             }
             else {
                 # noop
