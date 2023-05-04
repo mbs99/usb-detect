@@ -17,10 +17,19 @@ do {
         write-host (get-date -format s) " Drive name = " $driveLetter
         write-host (get-date -format s) " Drive label = " $driveLabel
         # Execute process if drive matches specified condition(s)
-        if ($driveLetter -eq 'Z:' -and $driveLabel -eq 'Mirror') {
-            write-host (get-date -format s) " Starting task in 3 seconds..."
-            start-sleep -seconds 3
-            start-process "Z:\sync.bat"
+        if ($driveLabel -eq 'Backup') {
+            
+            $Result = [System.Windows.Forms.MessageBox]::Show("Backup starten?", "Backup", 1)
+ 
+            If ($Result -eq "Yes") {
+                write-host (get-date -format s) " Starting task in 3 seconds..."
+                start-sleep -seconds 3
+                $cmd = $driveLetter + "\backup\backup.cmd"
+                start-process $cmd
+            }
+            else {
+                # noop
+            }
         }
     }
     Remove-Event -SourceIdentifier volumeChange
